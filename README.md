@@ -1,12 +1,9 @@
 
 🌐 NeoEncrypt – NeoTerra Messenger Crypto Module 🔐
 
- _   _                _____                     _             
-| \ | |              |  ___|                   | |            
-|  \| | ___  ___ ___ | |___  ___  ___ _ __   __| | ___  _ __  
-| . ` |/ _ \/ __/ __||  ___|/ _ \/ _ \ '_ \ / _` |/ _ \| '_ \ 
-| |\  |  __/\__ \__ \| |  |  __/  __/ | | | (_| | (_) | | | |
-\_| \_/\___||___/___/\_|   \___|\___|_| |_|\__,_|\___/|_| |_|
+<img width="598" height="120" alt="image" src="https://github.com/user-attachments/assets/7718dc34-c4cb-479b-b70e-36391b250f75" />
+
+
 
 Secure key exchange and cryptography module for the NeoTerra Internet State Messenger.
 Enables end-to-end encrypted communication using Diffie-Hellman key exchange.
@@ -39,9 +36,5 @@ Enables end-to-end encrypted communication using Diffie-Hellman key exchange.
 Open-source for development within the NeoTerra project.
 Free to adapt and extend for internal use.
 
- _   _                 _____                               _     
-| \ | |               |  ___|                             | |    
-|  \| | ___  ___ ___  | |___  ___  ___ _ __ ___   ___ _ __ | |__  
-| . ` |/ _ \/ __/ __| |  ___|/ _ \/ _ \ '_ ` _ \ / _ \ '_ \| '_ \ 
-| |\  |  __/\__ \__ \ | |  |  __/  __/ | | | | |  __/ | | | | | |
-\_| \_/\___||___/___/ \_|   \___|\___|_| |_| |_|\___|_| |_|_| |_|
+<img width="598" height="120" alt="image" src="https://github.com/user-attachments/assets/941bd4cb-22ce-4692-8cdf-79d048974056" />
+
