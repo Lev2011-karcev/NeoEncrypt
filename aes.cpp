@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <vector>
+#include <algorithm>
 
 static const uint8_t sbox[256] = {
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
@@ -43,7 +44,11 @@ void SubBytes(uint8_t state[4][4]){
         }
     }
 } // заменяем каждый байт по S-box
-void ShiftRows(uint8_t state[4][4]){}// циклическитй сдвиг строк
+void ShiftRows(uint8_t state[4][4]){
+    std::rotate(&state[1][0], &state[1][1], &state[1][4]);
+    std::rotate(&state[2][0], &state[2][2], &state[2][4]);
+    std::rotate(&state[3][0], &state[3][3], &state[3][4]);
+}// циклическитй сдвиг строк
 void MixColumns(uint8_t state[4][4]){}// перемешивание колонок через матрицу GF(2^8)
 void AddRoundKey(uint8_t state[4][4], const std::vector<uint8_t>& roundKey){}// делаем XOR
 
