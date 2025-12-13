@@ -16,7 +16,7 @@ long long mod_pow(long long base, long long exp, long long mod){
     return result;
 }
 long long secret_key(long long p, long long g, long long h){
-    return mod_pow(g, h, p);
+    return mod_pow(g, h, p);// создаем ключ который получает юзер от другого
 }
 
 long long session_key(long long p, long long a, long long b){//a - это ключ котрый получает юзер от другого, b - показатель степени это то secret key который мы  отправляли другому
