@@ -56,7 +56,7 @@ void AddRoundKey(uint8_t state[4][4], const std::vector<uint8_t>& roundKey){
     }
     for(int i = 0 ;i < 4; i++){
         for (int j = 0; j < 4; j++){
-            state[i][j] ^= roundKey[i * 4 + j];
+            state[i][j] ^= roundKey[i * 4 + j];// тут именно i * 4 + j а не i % keys.size() потому что мы испольщуем для блоков а не для сообщения больше ключа
         }
     }
 }// делаем XOR
