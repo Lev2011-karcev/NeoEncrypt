@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 
+using namespace std;
+
 static const uint8_t sbox[256] = {
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
     0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
@@ -37,20 +39,59 @@ static const uint8_t sbox[256] = {
     0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
 };
 
-void SubBytes(uint8_t state[4][4]){
+uint8_t xtime(uint8_t a){
+    if (a & 0x80) {
+        return (a << 1) ^ 0x1b;
+    } else {
+        return a << 1;
+    }
+}
+uint8_t mul3(uint8_t a){
+    return xtime(a) ^ a;
+}
+void SubBytes(vector<vector<uint8_t>>& state){
     for(int i = 0; i < 4;i++){
         for (int j = 0; j < 4; j++){
             state[i][j] = sbox[state[i][j]];
         }
     }
 } // заменяем каждый байт по S-box
-void ShiftRows(uint8_t state[4][4]){
+void ShiftRows(vector<vector<uint8_t>>& state){
     std::rotate(&state[1][0], &state[1][1], &state[1][4]);
     std::rotate(&state[2][0], &state[2][2], &state[2][4]);
     std::rotate(&state[3][0], &state[3][3], &state[3][4]);
 }// циклическитй сдвиг строк
-void MixColumns(uint8_t state[4][4]){}// перемешивание колонок через матрицу GF(2^8)
-void AddRoundKey(uint8_t state[4][4], const std::vector<uint8_t>& roundKey){
+void MixColumns(vector<vector<uint8_t>>& state) {
+    // Временный массив для хранения столбца перед перезаписью
+    uint8_t temp_col[4];
+
+    // Итерируемся по КАЖДОМУ СТОЛБЦУ (col = 0, 1, 2, 3)
+    for (int col = 0; col < 4; col++) {
+
+        // 1. Копируем текущий СТОЛБЕЦ во временный буфер:
+        temp_col[0] = state[0][col]; // Байт A
+        temp_col[1] = state[1][col]; // Байт B
+        temp_col[2] = state[2][col]; // Байт C
+        temp_col[3] = state[3][col]; // Байт D
+
+        // 2. Применяем ПРАВИЛЬНЫЕ формулы матричного умножения AES
+        //    и записываем новые значения обратно в тот же столбец:
+
+        // s0' = (2*A) ^ (3*B) ^ (1*C) ^ (1*D)
+        state[0][col] = xtime(temp_col[0]) ^ mul3(temp_col[1]) ^ temp_col[2] ^ temp_col[3];
+
+        // s1' = (1*A) ^ (2*B) ^ (3*C) ^ (1*D)
+        state[1][col] = temp_col[0] ^ xtime(temp_col[1]) ^ mul3(temp_col[2]) ^ temp_col[3];
+
+        // s2' = (1*A) ^ (1*B) ^ (2*C) ^ (3*D)
+        state[2][col] = temp_col[0] ^ temp_col[1] ^ xtime(temp_col[2]) ^ mul3(temp_col[3]);
+
+        // s3' = (3*A) ^ (1*B) ^ (1*C) ^ (2*D)
+        state[3][col] = mul3(temp_col[0]) ^ temp_col[1] ^ temp_col[2] ^ xtime(temp_col[3]);
+    }
+}
+// перемешивание колонок через матрицу GF(2^8)
+void AddRoundKey(vector<vector<uint8_t>>& state, const std::vector<uint8_t>& roundKey){
     if (roundKey.size() > 16){
         throw std::invalid_argument("Invalid round key size");
     }
