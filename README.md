@@ -1,7 +1,8 @@
 
 🌐 NeoEncrypt – NeoTerra Messenger Crypto Module 🔐
 
-<img width="598" height="120" alt="image" src="https://github.com/user-attachments/assets/7718dc34-c4cb-479b-b70e-36391b250f75" />
+<img width="640" height="94" alt="image" src="https://github.com/user-attachments/assets/35d70a0b-b3a6-494b-89d4-dbbddfb9b551" />
+
 
 
 
