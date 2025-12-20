@@ -27,6 +27,6 @@ std::vector<unsigned char> shared_key(long long ses_key){
     std::vector<unsigned char> aes_key(32);
     std::vector<unsigned char> buf(8);
     for (int i = 0 ; i < 8 ;i++) buf[i] = (ses_key >> (i * 8)) & 0xFF; // ses_key >> (i * 8) двигает число чтобы получить i-ый байт а & 0xFF - это маска чтобы получить только 8 битов
-    SHA256(buf, 8, aes_key);
+    SHA256(buf.data(), buf.size(), aes_key.data());
     return aes_key;
 }

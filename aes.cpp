@@ -83,29 +83,44 @@ void SubWord(uint8_t* w) {
 }
 
 vector<uint8_t> KeyExpansion(const uint8_t key[16]) {
-    vector<uint8_t> rk(176);
-    for (int i = 0; i < 16; i++) rk[i] = key[i];
-
-    int bytes = 16, rcon = 1;
+    // Для AES-128 нам нужно 11 раундовых ключей по 16 байт каждый = 176 байт
+    vector<uint8_t> expandedKeys(176);
     uint8_t temp[4];
 
-    while (bytes < 176) {
-        for (int i = 0; i < 4; i++)
-            temp[i] = rk[bytes - 4 + i];
+    // 1. Первый раундовый ключ — это сам исходный ключ
+    for (int i = 0; i < 16; i++) {
+        expandedKeys[i] = key[i];
+    }
 
-        if (bytes % 16 == 0) {
-            RotWord(temp);
-            SubWord(temp);
-            temp[0] ^= Rcon[rcon++];
+    int bytesGenerated = 16;
+    int rconPtr = 1;
+
+    while (bytesGenerated < 176) {
+        // Читаем предыдущее "слово" (последние 4 байта) во временный буфер
+        for (int i = 0; i < 4; i++) {
+            temp[i] = expandedKeys[bytesGenerated - 4 + i];
         }
 
+        // Каждые 16 байт (начало нового ключа) применяем трансформацию ядра
+        if (bytesGenerated % 16 == 0) {
+            RotWord(temp);    // Циклический сдвиг
+            SubWord(temp);    // Замена по S-Box
+
+            // XOR первого байта слова с константой раунда (Rcon)
+            temp[0] ^= Rcon[rconPtr++];
+        }
+
+        // Генерируем следующие 4 байта:
+        // Новое слово = (Слово 16 байт назад) XOR (temp)
         for (int i = 0; i < 4; i++) {
-            rk[bytes] = rk[bytes - 16] ^ temp[i];
-            bytes++;
+            expandedKeys[bytesGenerated] = expandedKeys[bytesGenerated - 16] ^ temp[i];
+            bytesGenerated++;
         }
     }
-    return rk;
+
+    return expandedKeys;
 }
+
 
 /* ===================== AES ENCRYPT ===================== */
 vector<uint8_t> aes_encrypt(const uint8_t input[16], const uint8_t key[16]) {
