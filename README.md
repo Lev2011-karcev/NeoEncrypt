@@ -37,5 +37,10 @@ Enables end-to-end encrypted communication using Diffie-Hellman key exchange.
 Open-source for development within the NeoTerra project.
 Free to adapt and extend for internal use.
 
+<<<<<<< HEAD
+=======
+
+<img width="640" height="94" alt="image" src="https://github.com/user-attachments/assets/35d70a0b-b3a6-494b-89d4-dbbddfb9b551" />
+>>>>>>> d9caddc82e5336082ff1ed8e1b9a23f045058a74
 
 <img width="640" height="94" alt="image" src="https://github.com/user-attachments/assets/35d70a0b-b3a6-494b-89d4-dbbddfb9b551" />
